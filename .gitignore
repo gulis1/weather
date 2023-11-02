@@ -2,5 +2,5 @@
 /target/
 /Cargo.lock
 /.vscode
-/.app.css
+/app.css
 /.idea
