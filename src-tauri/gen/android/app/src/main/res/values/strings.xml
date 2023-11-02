@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Tauri weather</string>
+    <string name="main_activity_title">Tauri weather</string>
+</resources>
