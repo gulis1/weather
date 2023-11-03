@@ -43,7 +43,7 @@ pub fn get_current_weather_type(weather: &CurrentWeatherData) -> WeatherType{
 pub fn get_hourly_weather_type(hourly: &HourlyWeatherData, ind: usize) -> WeatherType{
 
     if hourly.snowfall[ind] > 0.0 { WeatherType::Snowy }
-    else if hourly.precipitation_probability[ind] > 30  { WeatherType::Rainy }
+    else if hourly.precipitation_probability[ind] > 10  { WeatherType::Rainy }
     else if hourly.cloudcover[ind] > 30 { WeatherType::Cloudy}
     else { WeatherType::Clear } 
 }
@@ -51,11 +51,14 @@ pub fn get_hourly_weather_type(hourly: &HourlyWeatherData, ind: usize) -> Weathe
 pub fn get_background_uri(weather_type: WeatherType, is_day: i8) -> String {
 
     let file = match (weather_type, is_day) {
-        (WeatherType::Cloudy, _)    =>  "cloudy",
-        (WeatherType::Rainy, _)     =>  "rainy",
-        (WeatherType::Snowy, _)     =>  "snowy",
+        (WeatherType::Cloudy, 1)    =>  "clouds_day",
+        (WeatherType::Cloudy, 0)    =>  "clouds_night",
+        (WeatherType::Rainy, 1)     =>  "rain_day",
+        (WeatherType::Rainy, 0)     =>  "rain_night",
         (WeatherType::Clear, 1)     =>  "clear_day",
         (WeatherType::Clear, 0)     =>  "clear_night",
+        (WeatherType::Snowy, _)     =>  "snowy",
+
         _ => unreachable!("Boolean is_day can only be 0 or 1.")
     };
 

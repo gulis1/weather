@@ -23,7 +23,7 @@ pub struct HourlyWeatherData {
     pub is_day: Vec<i8>
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, PartialEq)]
 pub struct CurrentWeatherData {
     pub temperature_2m: f32,
     pub rain: f32,

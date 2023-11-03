@@ -87,7 +87,7 @@ pub fn Home() -> Html {
                     <WeatherIcon weather_type={get_current_weather_type(&weather.current_data)} is_day={weather.current_data.is_day} size={"4rem"}/>
                 </div>
                 
-                <HourlyWidget hourly_data={weather.hourly_data.clone()}/>
+                <HourlyWidget hourly_data={weather.hourly_data.clone()} current_data={weather.current_data.clone()}/>
                 
             }
         </div>       
