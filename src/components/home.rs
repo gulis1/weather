@@ -16,9 +16,9 @@ use crate::components::weather_icon::WeatherIcon;
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WeatherType {
     Clear,
-    Cloudy,
-    Rainy,
-    Snowy
+    Clouds,
+    Rain,
+    Snow
 }
 
 impl std::fmt::Display for WeatherType {
@@ -82,6 +82,7 @@ pub fn Home() -> Html {
             </Link<Route>>  
 
             if let Some(ref weather) = current_weather.data {
+                
                 <div class="flex flex-col gap-4 justify-center items-center">
                     <p class="text-5xl">{format!("{}°C", weather.current_data.temperature_2m)}</p>
                     <WeatherIcon weather_type={get_current_weather_type(&weather.current_data)} is_day={weather.current_data.is_day} size={"4rem"}/>

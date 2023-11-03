@@ -17,9 +17,9 @@ pub struct WeatherIconProps {
 pub fn WeatherIcon(props: &WeatherIconProps) -> Html {
 
     let icon_id = match (props.weather_type, props.is_day) {
-        (WeatherType::Cloudy, _)    =>  IconId::LucideCloudy,
-        (WeatherType::Rainy, _)     =>  IconId::LucideCloudRainWind,
-        (WeatherType::Snowy, _)     =>  IconId::LucideSnowflake,
+        (WeatherType::Clouds, _)    =>  IconId::LucideCloudy,
+        (WeatherType::Rain, _)     =>  IconId::LucideCloudRainWind,
+        (WeatherType::Snow, _)     =>  IconId::LucideSnowflake,
         (WeatherType::Clear, 1)  =>  IconId::LucideSun,
         (WeatherType::Clear, 0)  => IconId::LucideMoon,
         _ => unreachable!("Boolean is_day can only be 0 or 1.")

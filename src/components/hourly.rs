@@ -22,7 +22,7 @@ pub fn HourlyWidget(props: &HourlyProps) -> Html {
     html! {            
         
         <div class="w-full box-border">
-            <p class="text-xl pl-2">{"Hourly weather"}</p> 
+            <b class="text-xl pl-2">{"Hourly weather"}</b> 
             <ul class="w-full flex gap-1 overflow-scroll overflow-hidden pb-4">
             
             <li class="flex flex-col items-center p-2 gap-2">
@@ -40,7 +40,7 @@ pub fn HourlyWidget(props: &HourlyProps) -> Html {
                                          
                             <li class="flex flex-col items-center p-2 gap-2">
                                 
-                                if weather_type == WeatherType::Rainy || weather_type == WeatherType::Snowy {
+                                if weather_type == WeatherType::Rain || weather_type == WeatherType::Snow {
                                         <p>{ format!("{:02}", i % 24) }</p>
                                     <div>
 

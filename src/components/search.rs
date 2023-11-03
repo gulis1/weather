@@ -32,24 +32,24 @@ pub fn LocationSelector() -> Html {
 
         <div class="flex flex-col w-screen h-screen items-center p-4 gap-4"
             style={
-                "background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(/assets/bgs/Search.jpg); background-size: cover"
+                "background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(/assets/bgs/search.jpg); background-size: cover"
             }
         >
             
             <div class="w-full flex items-center gap-2 justify-between">
 
-                <Link<Route> to={Route::Home} classes="w-1/12 h-fit text-2xl text-white">
+                <Link<Route> to={Route::Home} classes="h-fit text-2xl text-white">
                     <Icon icon_id={IconId::LucideArrowLeft} width={"4rem"} height={"4rem"}/>
                 </Link<Route>>  
 
-                <div class="w-9/12 flex items-center border-2 border-white border-solid rounded-2xl bg-white text-2xl p-4" >
+                <div class="w-full flex items-center border-2 border-white border-solid rounded-2xl bg-white text-2xl p-4" >
                     <input class="w-full h-full rounded-2xl focus:outline-none" onchange={on_input} ref={input_ref}/>
                     <Icon icon_id={IconId::LucideSearch} width={"2rem"} height={"2rem"}/>
                 </div>
             </div>
 
 
-            <ul class="w-full text-white"> { 
+            <ul class="w-full text-white overflow-scroll"> { 
                 (*search_results).clone().into_iter()
                 .map(|loc| {
                     html! { 

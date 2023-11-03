@@ -34,30 +34,30 @@ macro_rules! async_callback {
 
 pub fn get_current_weather_type(weather: &CurrentWeatherData) -> WeatherType{
 
-    if weather.snowfall > 0.0 { WeatherType::Snowy }
-    else if weather.rain > 0.0  { WeatherType::Rainy }
-    else if weather.cloudcover > 30 { WeatherType::Cloudy}
+    if weather.snowfall > 0.0 { WeatherType::Snow }
+    else if weather.rain > 0.0  { WeatherType::Rain }
+    else if weather.cloudcover > 30 { WeatherType::Clouds}
     else { WeatherType::Clear } 
 }
 
 pub fn get_hourly_weather_type(hourly: &HourlyWeatherData, ind: usize) -> WeatherType{
 
-    if hourly.snowfall[ind] > 0.0 { WeatherType::Snowy }
-    else if hourly.precipitation_probability[ind] > 10  { WeatherType::Rainy }
-    else if hourly.cloudcover[ind] > 30 { WeatherType::Cloudy}
+    if hourly.snowfall[ind] > 0.0 { WeatherType::Snow }
+    else if hourly.precipitation_probability[ind] > 10  { WeatherType::Rain }
+    else if hourly.cloudcover[ind] > 30 { WeatherType::Clouds}
     else { WeatherType::Clear } 
 }
 
 pub fn get_background_uri(weather_type: WeatherType, is_day: i8) -> String {
 
     let file = match (weather_type, is_day) {
-        (WeatherType::Cloudy, 1)    =>  "clouds_day",
-        (WeatherType::Cloudy, 0)    =>  "clouds_night",
-        (WeatherType::Rainy, 1)     =>  "rain_day",
-        (WeatherType::Rainy, 0)     =>  "rain_night",
+        (WeatherType::Clouds, 1)    =>  "clouds_day",
+        (WeatherType::Clouds, 0)    =>  "clouds_night",
+        (WeatherType::Rain, 1)     =>  "rain_day",
+        (WeatherType::Rain, 0)     =>  "rain_night",
         (WeatherType::Clear, 1)     =>  "clear_day",
         (WeatherType::Clear, 0)     =>  "clear_night",
-        (WeatherType::Snowy, _)     =>  "snowy",
+        (WeatherType::Snow, _)     =>  "snowy",
 
         _ => unreachable!("Boolean is_day can only be 0 or 1.")
     };
