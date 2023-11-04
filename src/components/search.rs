@@ -4,7 +4,8 @@ use gloo_storage::{LocalStorage, Storage};
 use yew_icons::{Icon, IconId};
 use yew_router::prelude::*;
 
-use crate::{api::geo::{search_location, GeoResult}, Route};
+use crate::Route;
+use crate::api::geo::{search_location, GeoResult};
 
 
 #[derive(Properties, PartialEq)]

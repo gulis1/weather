@@ -3,7 +3,12 @@ use serde::Deserialize;
 use anyhow::Result;
 
 
-const API_URL: &str = "https://api.open-meteo.com/v1/forecast?current=temperature_2m,is_day,precipitation,rain,snowfall,cloudcover&hourly=temperature_2m,snowfall,precipitation_probability,cloudcover,is_day&timezone=auto&forecast_days=3";
+const API_URL: &str = "https://api.open-meteo.com/v1/forecast\
+?current=temperature_2m,is_day,precipitation,rain,snowfall,cloudcover,weather_code\
+&hourly=temperature_2m,snowfall,precipitation_probability,cloudcover,is_day,weather_code\
+&daily=temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max,weather_code\
+&timezone=auto\
+&forecast_days=7";
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct WeatherData {
@@ -11,7 +16,8 @@ pub struct WeatherData {
     pub longitude: f64,
     pub timezone: String,
     pub hourly: HourlyWeatherData,
-    pub current: CurrentWeatherData
+    pub current: CurrentWeatherData,
+    pub daily: DailyWeatherData
 }
 
 #[derive(Debug, Clone, Deserialize, PartialEq)]
@@ -20,8 +26,20 @@ pub struct HourlyWeatherData {
     pub precipitation_probability: Vec<i32>,
     pub snowfall: Vec<f32>,
     pub cloudcover: Vec<i32>,
-    pub is_day: Vec<i8>
+    pub is_day: Vec<i8>,
+    pub weather_code: Vec<i8>
 }
+
+#[derive(Debug, Clone, Deserialize, PartialEq)]
+pub struct DailyWeatherData {
+    pub time: Vec<String>,
+    pub temperature_2m_max: Vec<f32>,
+    pub temperature_2m_min: Vec<f32>,
+    pub precipitation_probability_max: Vec<i32>,
+    pub snowfall_sum: Vec<f32>,
+    pub weather_code: Vec<i8>
+}
+
 
 #[derive(Debug, Clone, Deserialize, PartialEq)]
 pub struct CurrentWeatherData {
@@ -29,7 +47,9 @@ pub struct CurrentWeatherData {
     pub rain: f32,
     pub snowfall: f32,
     pub cloudcover: i32,
-    pub is_day: i8
+    pub is_day: i8,
+    pub weather_code: i8
+
 }
 
 pub async fn get_todays_weather(latitude: f64, longitude: f64) -> Result<WeatherData> {

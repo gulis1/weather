@@ -7,7 +7,8 @@ use yew_icons::{Icon, IconId};
 
 use crate::Route;
 use crate::api::geo::GeoResult;
-use crate::api::weather::{CurrentWeatherData, get_todays_weather, HourlyWeatherData};
+use crate::api::weather::{CurrentWeatherData, get_todays_weather, HourlyWeatherData, DailyWeatherData};
+use crate::components::daily::DailyWidget;
 use crate::components::hourly::HourlyWidget;
 use crate::utils::{get_current_weather_type, get_background_uri};
 use crate::components::weather_icon::WeatherIcon;
@@ -30,7 +31,8 @@ impl std::fmt::Display for WeatherType {
 #[derive(Debug, Clone)]
 struct HomeData {
     current_data: CurrentWeatherData,
-    hourly_data: HourlyWeatherData
+    hourly_data: HourlyWeatherData,
+    daily_data: DailyWeatherData
 }
 
 #[function_component]
@@ -48,7 +50,8 @@ pub fn Home() -> Html {
                     
                     Ok(HomeData{
                         current_data: weather.current,
-                        hourly_data: weather.hourly
+                        hourly_data: weather.hourly,
+                        daily_data: weather.daily
                     })
                 }
                 Err(_) => Err(()) 
@@ -64,7 +67,7 @@ pub fn Home() -> Html {
 
     html! {            
         <div 
-            class="z-0 h-screen w-screen absolute flex flex-col gap-32 text-white items-center p-8" 
+            class="z-0 h-screen w-screen absolute flex flex-col text-white items-center p-8 overflow-scroll" 
             style={
 
                 let bg_uri = match &current_weather.data {
@@ -74,7 +77,7 @@ pub fn Home() -> Html {
                 format!("background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url({}); background-size: cover", bg_uri)
             }
         >
-            <Link<Route> to={Route::Search} classes="h-fit">
+            <Link<Route> to={Route::Search}>
                 <button class="z-10 flex gap-8 text-4xl justify-center items-center h-fit mt-8 p-3 w-min pr-4 border-2 rounded-2xl border-solid border-white active:text-sky-300 active:border-sky-300">
                     <p class="h-fit">{loc.as_ref().map(|loc| loc.name.as_str()).unwrap_or("Search")}</p>
                     <Icon icon_id={IconId::LucideSearch} width="2rem" height="2rem"/>
@@ -83,12 +86,17 @@ pub fn Home() -> Html {
 
             if let Some(ref weather) = current_weather.data {
                 
-                <div class="flex flex-col gap-4 justify-center items-center">
-                    <p class="text-5xl">{format!("{}°C", weather.current_data.temperature_2m)}</p>
-                    <WeatherIcon weather_type={get_current_weather_type(&weather.current_data)} is_day={weather.current_data.is_day} size={"4rem"}/>
+                <div class="w-full flex flex-col items-center justify-center gap-4">
+                    
+                    <div class="flex flex-col gap-4 justify-center items-center mt-16 mb-8">
+                        <p class="text-5xl">{format!("{}°C", weather.current_data.temperature_2m)}</p>
+                        <WeatherIcon weather_type={get_current_weather_type(&weather.current_data)} is_day={weather.current_data.is_day} size={"4rem"}/>
+                    </div>
+                    
+                    <HourlyWidget hourly_data={weather.hourly_data.clone()} current_data={weather.current_data.clone()}/>
+                    <DailyWidget  daily_data={weather.daily_data.clone()}/>
                 </div>
                 
-                <HourlyWidget hourly_data={weather.hourly_data.clone()} current_data={weather.current_data.clone()}/>
                 
             }
         </div>       

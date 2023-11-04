@@ -1,4 +1,4 @@
-use crate::api::weather::{CurrentWeatherData, HourlyWeatherData};
+use crate::api::weather::{CurrentWeatherData, HourlyWeatherData, DailyWeatherData};
 use crate::components::home::WeatherType;
 
 
@@ -46,6 +46,19 @@ pub fn get_hourly_weather_type(hourly: &HourlyWeatherData, ind: usize) -> Weathe
     else if hourly.precipitation_probability[ind] > 10  { WeatherType::Rain }
     else if hourly.cloudcover[ind] > 30 { WeatherType::Clouds}
     else { WeatherType::Clear } 
+}
+
+pub fn get_daily_weather_type(daily: &DailyWeatherData, ind: usize) -> WeatherType {
+
+
+    if daily.precipitation_probability_max[ind] > 20 && daily.snowfall_sum[ind] > 0.0 { WeatherType::Snow }
+    else if daily.precipitation_probability_max[ind] > 20  { WeatherType::Rain }
+    else {
+        match daily.weather_code[ind] {
+        1..=3 => WeatherType::Clouds,
+        _ => WeatherType::Clear
+        }
+    }
 }
 
 pub fn get_background_uri(weather_type: WeatherType, is_day: i8) -> String {
