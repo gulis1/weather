@@ -41,14 +41,18 @@ pub fn DailyWidget(props: &DailyProps) -> Html {
                         <li class="flex items-center gap-2 py-2 border-gray-800 border-solid border-b">
 
                             <p class="w-4/12 ">{weekday}</p>
-                            <span class="w-5/12 flex items-center gap-2">
+                            <span class="w-4/12 flex items-center gap-2">
                                 <WeatherIcon weather_type={weather_type} is_day={1} size={"2rem"}/>
                                 if weather_type == WeatherType::Rain || weather_type == WeatherType::Snow {
                                     <p>{precipitation_probability.to_string() + "%"}</p>
                                 }
                             </span>
-                            <p class="w-4/12 text-sky-300">{temp_min.to_string() + "°"}</p>
-                            <p class="w-4/12 text-orange-300">{temp_max.to_string() + "°"}</p>
+                            <span class="w-4/12 flex items-center">
+                                <p class="w-6/12 text-sky-300">{temp_min.to_string() + "°"}</p>
+                                <p class="w-6/12 text-orange-300">{temp_max.to_string() + "°"}</p>
+                            </span>
+
+                            
                         </li>
                     }
             
